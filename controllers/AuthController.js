@@ -2,10 +2,21 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
 
-const { fetchUserByEmail, storeUser } = require("../models/User");
+const { fetchUserByEmail } = require("../models/User");
 
 const asyncErrorHandler = require("../utils/asyncErrorHandler");
 const CustomError = require("../utils/CustomError");
+
+
+const createAccessToken = (payload) => {
+    return jwt.sign(
+        payload,
+        process.env.SECRET_STR,
+        {
+            expiresIn: '7d'
+        }
+    );
+}
 
 
 //  @route /login/
@@ -39,24 +50,37 @@ const login = asyncErrorHandler(async (req, res, next) => {
         role: user.get('role'),
     }
 
-    const token = jwt.sign(
+    const accessToken = jwt.sign(
         payload,
-        process.env.SECRET_STR,
-        {
-            expiresIn: '7d'
-        }
+        process.env.ACCESS_TOKEN_SECRET,
+        { expiresIn: '7d' }
     );
 
+    res.cookie('jwt', accessToken, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        maxAge: 7 * 24 * 60 * 60 * 1000
+    });
+
+
+    payload.accessToken = accessToken;
 
     return res.status(200).json({
         status: 'success',
-        data: payload,
-        token
+        data: payload
     });
 });
 
-
+//  @route /logout/
+//  @method POST
+const logout = (req, res) => {
+    res.cookie('jwt', '', { maxAge: 1 });
+    res.status(200).json({
+        status: 'success',
+        message: 'Logout realizado com sucesso'
+    });
+};
 
 module.exports = {
-    login
+    login, logout
 }

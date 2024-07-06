@@ -1,16 +1,15 @@
 const express = require("express");
 const router = express.Router();
 
-const verifyJWT = require('../middlewares/verifyJWT');
-const { index, store, destroy, show, create } = require('../controllers/ProductController');
+const { index, create, destroy, show, update } = require('../controllers/ProductController');
 
 router.route('/products')
-    .get(verifyJWT, index)
-    .post(verifyJWT, store);
+    .get(index)
+    .post(create);
 
 router.route('/products/:id')
-    .get(verifyJWT, show)
-    .delete(verifyJWT, destroy)
-    .put(verifyJWT, create);
+    .get(show)
+    .delete(destroy)
+    .put(update);
 
-module.exports = router
+module.exports = router;

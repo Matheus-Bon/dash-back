@@ -1,3 +1,5 @@
+const { storeUser } = require("../models/User");
+
 const asyncErrorHandler = require("../utils/asyncErrorHandler");
 
 //  @route /users
@@ -13,7 +15,7 @@ const create = asyncErrorHandler(async (req, res, next) => {
     const newUser = await storeUser(user);
 
     return res.status(201).json({
-        sattus: 'success',
+        status: 'success',
         data: {
             name: newUser.get('name'),
             phone: newUser.get('phone'),
