@@ -46,8 +46,43 @@ const schema = new Schema(
 
 const Product = mongoose.model("products", schema);
 
+const storeProduct = async(product) => {
+    return await Product.create(product);
+}
 
+const editProduct = async(id, product) => {
+    return await Product.findByIdAndUpdate(id, product);
+}
+
+const fetchProduct = async(id) => {
+    return await Product.findById(id);
+}
+
+const fetchProducts = async(page = 1, limit = 10, search) => {
+    page = parseInt(page);
+    limit = parseInt(limit);
+
+    const skip = (page - 1) * limit;
+    const query = search ? { name: { $regex: search, $options: 'i' } } : {};
+    const products = await Product.find(query).skip(skip).limit(limit);
+    const total = await Product.countDocuments();
+
+    return {
+        products,
+        total,
+        page,
+        totalPages: Math.ceil(total / limit),
+    };
+}
+
+const deleteProduct = async(id) => {
+    return await Product.findByIdAndDelete(id);
+}
 
 module.exports = {
-
+    deleteProduct,
+    fetchProduct,
+    fetchProducts,
+    storeProduct,
+    editProduct
 }

@@ -5,6 +5,8 @@ const cors = require("cors");
 const globalErrorHandler = require('./controllers/ErrorController');
 
 const AuthRoutes = require('./routes/AuthRoutes');
+const ProductRoutes = require('./routes/ProductRoutes');
+
 
 const whitelist = [''];
 const corsOptions = {
@@ -25,6 +27,7 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 app.use(AuthRoutes);
+app.use(ProductRoutes);
 
 
 app.all('*', (req, res, next) => {
