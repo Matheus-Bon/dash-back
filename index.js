@@ -13,7 +13,10 @@ const OrderRoutes = require('./routes/OrderRoutes');
 
 
 
-const whitelist = ['http://localhost:3000'];
+const whitelist = [
+    'http://localhost:3000',
+    'https://3000-idx-dash-front-1720298337504.cluster-4xpux6pqdzhrktbhjf2cumyqtg.cloudworkstations.dev'
+];
 const corsOptions = {
     origin: function (origin, callback) {
         if (whitelist.indexOf(origin) !== -1 || !origin) {
