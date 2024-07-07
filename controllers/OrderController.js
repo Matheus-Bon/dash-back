@@ -19,15 +19,16 @@ const create = asyncErrorHandler(async (req, res, next) => {
 //  @route /orders
 //  @method GET
 const index = asyncErrorHandler(async (req, res, next) => {
-    const orders = await fetchOrders();
-
     res.writeHead(200, {
         'Content-Type': 'text/event-stream',
         'Cache-Control': 'no-cache',
         'Connection': 'keep-alive'
     });
 
-    res.write(`data: ${JSON.stringify(orders)}`);
+    setInterval(async () => {
+        const orders = await fetchOrders();
+        res.write(`data: ${JSON.stringify(orders)}\n\n`);
+    }, 1000);
 });
 
 const show = asyncErrorHandler(async (req, res, next) => {
