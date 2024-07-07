@@ -2,8 +2,7 @@ const jwt = require('jsonwebtoken');
 const CustomError = require('../utils/CustomError');
 
 const verifyJWT = (req, res, next) => {
-    console.log(req)
-    const token = req.cookies.jwt;
+    const token = req.cookies.auth;
     if (!token) {
         const error = new CustomError('Sem autorização', 401);
         return next(error);

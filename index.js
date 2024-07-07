@@ -9,9 +9,11 @@ const verifyJWT = require('./middlewares/verifyJWT');
 const AuthRoutes = require('./routes/AuthRoutes');
 const ProductRoutes = require('./routes/ProductRoutes');
 const UserRoutes = require('./routes/UserRoutes');
+const OrderRoutes = require('./routes/OrderRoutes');
 
 
-const whitelist = [''];
+
+const whitelist = ['http://localhost:3000'];
 const corsOptions = {
     origin: function (origin, callback) {
         if (whitelist.indexOf(origin) !== -1 || !origin) {
@@ -36,6 +38,7 @@ app.use(verifyJWT);
 
 app.use(ProductRoutes);
 app.use(UserRoutes);
+app.use(OrderRoutes);
 
 
 

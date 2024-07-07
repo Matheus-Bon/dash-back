@@ -8,17 +8,6 @@ const asyncErrorHandler = require("../utils/asyncErrorHandler");
 const CustomError = require("../utils/CustomError");
 
 
-const createAccessToken = (payload) => {
-    return jwt.sign(
-        payload,
-        process.env.SECRET_STR,
-        {
-            expiresIn: '7d'
-        }
-    );
-}
-
-
 //  @route /login/
 //  @method POST
 const login = asyncErrorHandler(async (req, res, next) => {
@@ -39,7 +28,7 @@ const login = asyncErrorHandler(async (req, res, next) => {
     const samePwd = await bcrypt.compare(password, hash);
 
     if (!samePwd) {
-        const error = new CustomError('Senha incorreta', 401);
+        const error = new CustomError('Senha incorreta', 400);
         return next(error);
     }
 
@@ -56,9 +45,9 @@ const login = asyncErrorHandler(async (req, res, next) => {
         { expiresIn: '7d' }
     );
 
-    res.cookie('jwt', accessToken, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
+    res.cookie('auth', accessToken, {
+        httpOnly: process.env.DEBUG === '0',
+        secure: process.env.DEBUG === '0',
         maxAge: 7 * 24 * 60 * 60 * 1000
     });
 

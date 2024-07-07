@@ -62,6 +62,7 @@ const storeUser = async (newUser) => {
 }
 
 module.exports = {
+    User,
     fetchUserByEmail,
     storeUser
 }
