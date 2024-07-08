@@ -20,15 +20,16 @@ const create = asyncErrorHandler(async (req, res, next) => {
 //  @method GET
 const index = asyncErrorHandler(async (req, res, next) => {
     res.writeHead(200, {
+        'Access-Control-Allow-Credentials': true,
         'Content-Type': 'text/event-stream',
         'Cache-Control': 'no-cache',
-        'Connection': 'keep-alive'
+        'Connection': 'keep-alive',
     });
 
     setInterval(async () => {
         const orders = await fetchOrders();
         res.write(`data: ${JSON.stringify(orders)}\n\n`);
-    }, 1000);
+    }, 10000);
 });
 
 const show = asyncErrorHandler(async (req, res, next) => {

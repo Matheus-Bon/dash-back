@@ -55,9 +55,11 @@ const fetchOrders = async () => {
             createdAt: {
                 $gte: midnigth,
                 $lte: currDate
-            }
+            },
+            order_code: { $ne: '' }
         })
         .populate('user', 'name phone')
+        .sort({ createdAt: -1 })
         .select({
             '__v': 0,
             'updatedAt': 0,

@@ -36,10 +36,10 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use(AuthRoutes);
-app.use(OrderRoutes);
 
 app.use(verifyJWT);
 
+app.use(OrderRoutes);
 app.use(ProductRoutes);
 app.use(UserRoutes);
 
