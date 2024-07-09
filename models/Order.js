@@ -52,11 +52,11 @@ const fetchOrders = async () => {
 
     const orders = await Order
         .find({
-            createdAt: {
-                $gte: midnigth,
-                $lte: currDate
-            },
-            order_code: { $ne: '' }
+            // createdAt: {
+            //     $gte: midnigth,
+            //     $lte: currDate
+            // },
+            // order_code: { $ne: '' }
         })
         .populate('user', 'name phone')
         .sort({ createdAt: -1 })
