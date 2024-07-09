@@ -28,12 +28,13 @@ const schema = new Schema(
         phone: {
             type: String,
             maxlength: [13, "Contato deve ter 13 caracteres"],
+            minlength: [13, "Contato deve ter 13 caracteres"],
             unique: true
         },
         role: {
             type: String,
             enum: {
-                values: ['admin', 'clerk', 'user', 'deliveryMan'],
+                values: ['admin', 'clerk', 'user', 'delivery_man'],
                 message: "Esse cargo não existe"
             }
         },
