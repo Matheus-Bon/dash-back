@@ -21,6 +21,7 @@ const create = asyncErrorHandler(async (req, res, next) => {
 const index = asyncErrorHandler(async (req, res, next) => {
     res.writeHead(200, {
         'Access-Control-Allow-Credentials': true,
+        'Access-Control-Allow-Origin': '*',
         'Content-Type': 'text/event-stream',
         'Cache-Control': 'no-cache',
         'Connection': 'keep-alive',
