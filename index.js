@@ -12,27 +12,21 @@ const UserRoutes = require('./routes/UserRoutes');
 const OrderRoutes = require('./routes/OrderRoutes');
 
 
-
-const whitelist = [
-    'http://localhost:3000',
-    'https://3000-idx-dash-front-1720298337504.cluster-4xpux6pqdzhrktbhjf2cumyqtg.cloudworkstations.dev',
-    'https://admin-dashboard-hermes.vercel.app'
-];
 const corsOptions = {
-    origin: function (origin, callback) {
-        if (whitelist.indexOf(origin) !== -1 || !origin) {
-            callback(null, true)
-        } else {
-            callback(new Error('Not allowed by CORS'))
-        }
-    }
-}
+    origin: [
+        'http://localhost:3000',
+        'https://3000-idx-dash-front-1720298337504.cluster-4xpux6pqdzhrktbhjf2cumyqtg.cloudworkstations.dev',
+        'https://admin-dashboard-hermes.vercel.app'
+    ],
+    allowedHeaders: ['Content-Type', 'Authorization'], // Permitir o cabeçalho de autorização
+    credentials: true // Permitir envio de cookies e cabeçalhos de autorização
+};
 
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
 
@@ -48,7 +42,7 @@ app.use(UserRoutes);
 
 app.all('*', (req, res, next) => {
     res.status(500).json({
-        status: 'fail', 
+        status: 'fail',
         message: "Essa rota não existe"
     })
 })

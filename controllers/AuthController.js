@@ -45,13 +45,6 @@ const login = asyncErrorHandler(async (req, res, next) => {
         { expiresIn: '7d' }
     );
 
-    res.cookie('auth', accessToken, {
-        httpOnly: process.env.DEBUG === '0',
-        secure: process.env.DEBUG === '0',
-        maxAge: 7 * 24 * 60 * 60 * 1000
-    });
-
-
     payload.accessToken = accessToken;
 
     return res.status(200).json({
