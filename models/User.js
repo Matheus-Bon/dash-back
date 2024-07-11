@@ -62,8 +62,41 @@ const storeUser = async (newUser) => {
     return await User.create(newUser);
 }
 
+const fetchUsers = async (page = 1, limit = 10, search, role) => {
+    page = page === 0 ? 1 : page;
+
+    const filter = { role };
+    const skip = (page - 1) * limit;
+
+    if (search) {
+        filter.name = {
+            $regex: search, $options: 'i'
+        }
+    }
+
+    const users = await User
+        .find(filter)
+        .select('name phone')
+        .skip(skip)
+        .limit(limit)
+    const total = await User.countDocuments(filter);
+
+    return {
+        users,
+        total,
+        page,
+        totalPages: Math.ceil(total / limit),
+    };
+}
+
+const deleteUser = async(id) => {
+    return await User.findByIdAndDelete(id);
+}
+
 module.exports = {
     User,
     fetchUserByEmail,
-    storeUser
+    storeUser,
+    fetchUsers,
+    deleteUser
 }

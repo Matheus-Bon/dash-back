@@ -1,4 +1,4 @@
-const { storeUser } = require("../models/User");
+const { storeUser, fetchUsers, deleteUser } = require("../models/User");
 
 const asyncErrorHandler = require("../utils/asyncErrorHandler");
 
@@ -25,6 +25,35 @@ const create = asyncErrorHandler(async (req, res, next) => {
     })
 });
 
+//  @route /users
+//  @method GET
+const index = asyncErrorHandler(async (req, res, next) => {
+    let { page, limit, search, role } = req.query;
+
+    page = parseInt(page);
+    limit = parseInt(limit);
+
+    const users = await fetchUsers(page, limit, search, role);
+
+    return res.status(200).json({
+        sattus: 'success',
+        data: users
+    });
+});
+
+//  @route /users/:id
+//  @method DELETE
+const destroy = asyncErrorHandler(async (req, res, next) => {
+    await deleteUser(req.params.id);
+
+    return res.status(200).json({
+        status: 'success',
+        data: {}
+    });
+});
+
 module.exports = {
-    create
+    create,
+    index,
+    destroy
 }
