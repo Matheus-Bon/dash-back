@@ -16,7 +16,7 @@ const corsOptions = {
     origin: [
         'http://localhost:3000',
         'https://3000-idx-dash-front-1720298337504.cluster-4xpux6pqdzhrktbhjf2cumyqtg.cloudworkstations.dev',
-        'https://admin-dashboard-hermes.vercel.app'
+        'https://dashboard-hermes.vercel.app'
     ],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true
