@@ -16,9 +16,11 @@
     "body-parser": "^1.20.2",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
+    "escpos": "^3.0.0-alpha.6",
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.4.4",
+    "node-thermal-printer": "^4.4.2",
     "validator": "^13.12.0"
   }
 }
